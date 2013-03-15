@@ -1,4 +1,6 @@
+from clases.models import Clases
 from django.shortcuts import render_to_response
 
 def home(request):
-	return render_to_response('clases.html')
+	clases = Clases.objects.all()
+	return render_to_response('clases.html', {'clases': clases})

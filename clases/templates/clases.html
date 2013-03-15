@@ -3,6 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Mini Plataforma</title>
+
+	<link rel="stylesheet" href="/static/css/normalize.css">
+	<link rel="stylesheet" href="/static/css/clases.css">
 </head>
 <body>
 	<header>
@@ -11,10 +14,16 @@
 	<section>
 		<article id="clases">
 			<ul>
-				<li class="clase"><a href="">Clase 1</a></li>
-				<li class="clase"><a href="">Clase 2</a></li>
-				<li class="clase"><a href="">Clase 3</a></li>
-				<li class="clase"><a href="">Clase 4</a></li>
+				{% for clase in clases %}
+				<li>
+					<a href="#" data-id="{{ clase.id }}">
+						<figure>
+							<img src="/static/img/{{ clase.thumb }}">
+							<figcaption>{{ clase.descripcion }}</figcaption>
+						</figure>
+					</a>
+				</li>
+				{% endfor %}
 			</ul>
 		</article>
 	</section>
