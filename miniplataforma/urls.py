@@ -14,5 +14,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'clases.views.home', name='home')
+    url(r'^$', 'clases.views.home', name='home'),
+    url(r'cargar-contenido-clase/(\d)$', 'clases.views.cargar_clase', name='cargar_clase'),
 )

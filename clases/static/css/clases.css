@@ -31,6 +31,10 @@ img{
 	width: 10em;
 }
 
+section{
+	position: relative;
+}
+
 ul{
 	list-style: none;
 	margin: 0;
@@ -52,7 +56,51 @@ ul li:hover{
 	box-shadow: 0 0 10px #d4d8da;
 }
 
+#contenido-clase{
+	background: #fefefe;
+	left: -110%;
+	padding: 2em;
+	position: absolute;
+	transition: all 0.5s ease;
+	width: 50%;
+}
+
+#contenido-clase iframe{
+	height: 22em;
+	width: 100%;
+}
+
 #clases{
 	background: #fefefe;
+	left: 0;
+	position: absolute;
+	transition: all 0.5s ease;
 	width: 55%;
+}
+
+#clases a{
+	cursor: pointer;
+}
+
+.regresar{
+	background: #095e87;
+	border-bottom: 3px solid #065073;
+	color: #fff;
+	cursor: pointer;
+	display: block;
+	font-weight: bold;
+	padding: 12px 20px 11px;
+	text-align: right;
+	text-transform: uppercase;
+	width: 50%;
+}
+
+.regresar:before{
+	border-bottom: 21px solid transparent;
+	border-right: 24px solid #095e87;
+	border-top: 20px solid transparent;
+	content: "";
+	left: 0.5em;
+	position: absolute;
+	top: 2em;
 }

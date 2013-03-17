@@ -6,6 +6,11 @@
 
 	<link rel="stylesheet" href="/static/css/normalize.css">
 	<link rel="stylesheet" href="/static/css/clases.css">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/static/js/prefixfree.min.js"></script>
+	<script src="/static/js/main.js"></script>
+
 </head>
 <body>
 	<header>
@@ -16,7 +21,7 @@
 			<ul>
 				{% for clase in clases %}
 				<li>
-					<a href="#" data-id="{{ clase.id }}">
+					<a data-id="{{ clase.id }}">
 						<figure>
 							<img src="/static/img/{{ clase.thumb }}">
 							<figcaption>{{ clase.descripcion }}</figcaption>
@@ -26,6 +31,7 @@
 				{% endfor %}
 			</ul>
 		</article>
+		<article id="contenido-clase"></article>
 	</section>
 </body>
 </html>
