@@ -24,11 +24,25 @@ figcaption, img{
 	vertical-align: middle;
 }
 
+
 img{
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.3);
 	border: 1px solid #cdd1d4;
 	height: 7em;
 	width: 10em;
+}
+
+input[type="text"] {
+	border: 2px solid #cdd1d4;
+	border-radius: 0.3em;
+	box-shadow: inset 0 0px 6px rgba(0,0,0,0.2);
+	box-sizing: border-box;
+	padding: 0.5em;
+	width: 100%;
+}
+
+input[type="text"]:focus {
+	height: 2.5em;
 }
 
 section{
@@ -56,6 +70,18 @@ ul li:hover{
 	box-shadow: 0 0 10px #d4d8da;
 }
 
+#clases{
+	background: #fefefe;
+	left: 0;
+	position: absolute;
+	transition: all 0.5s ease;
+	width: 55%;
+}
+
+#clases a{
+	cursor: pointer;
+}
+
 #contenido-clase{
 	background: #fefefe;
 	left: -110%;
@@ -70,16 +96,27 @@ ul li:hover{
 	width: 100%;
 }
 
-#clases{
-	background: #fefefe;
-	left: 0;
-	position: absolute;
-	transition: all 0.5s ease;
-	width: 55%;
+#crear-pregunta{
+	background: #e9eef4;
+	padding: 0.5em;
 }
 
-#clases a{
-	cursor: pointer;
+#crear-pregunta button {
+	background: #ffa500;
+	border: 1px solid #c9910a;
+	border-bottom: 3px solid #c9910a;
+	border-radius: 0.2em;
+	color: #896008;
+	margin-top: 0.5em;
+	padding: 0.5em 4em;
+}
+
+#preguntas{
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+	width: 45%;
 }
 
 .regresar{
