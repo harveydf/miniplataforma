@@ -9,6 +9,7 @@ body{
 	background: #008fd5;
 	font-family: 'Strait';
 	font-size: 16px;
+	height: 100%
 }
 
 figcaption{
@@ -32,21 +33,8 @@ img{
 	width: 10em;
 }
 
-input[type="text"] {
-	border: 2px solid #cdd1d4;
-	border-radius: 0.3em;
-	box-shadow: inset 0 0px 6px rgba(0,0,0,0.2);
-	box-sizing: border-box;
-	padding: 0.5em;
-	width: 100%;
-}
-
-input[type="text"]:focus {
-	height: 2.5em;
-}
-
 section{
-	position: relative;
+	/*position: relative;*/
 }
 
 ul{
@@ -55,40 +43,42 @@ ul{
 	padding: 0;
 }
 
-ul li{
-	background: #fefefe;
-	border-bottom: 1px solid #cdd1d4;
-	box-shadow: inset 0 11px 15px -14px #cdd1d4;	
-	padding: 1em;
-}
-
-ul li:first-child{
-	border-top: 1px solid #cdd1d4;
-}
-
-ul li:hover{
-	box-shadow: 0 0 10px #d4d8da;
-}
-
 #clases{
 	background: #fefefe;
 	left: 0;
 	position: absolute;
 	transition: all 0.5s ease;
-	width: 55%;
+	width: 100%;
 }
 
 #clases a{
 	cursor: pointer;
 }
 
+
+#clases ul li{
+	background: #fefefe;
+	border-bottom: 1px solid #cdd1d4;
+	box-shadow: inset 0 11px 15px -14px #cdd1d4;	
+	padding: 1em;
+}
+
+#clases ul li:first-child{
+	border-top: 1px solid #cdd1d4;
+}
+
+#clases ul li:hover{
+	box-shadow: 0 0 10px #d4d8da;
+}
+
 #contenido-clase{
 	background: #fefefe;
+	box-sizing: border-box;
 	left: -110%;
 	padding: 2em;
 	position: absolute;
 	transition: all 0.5s ease;
-	width: 50%;
+	width: 100%;
 }
 
 #contenido-clase iframe{
@@ -96,27 +86,26 @@ ul li:hover{
 	width: 100%;
 }
 
-#crear-pregunta{
-	background: #e9eef4;
-	padding: 0.5em;
+#libro{
+	box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+	width: 55%;
 }
 
-#crear-pregunta button {
-	background: #ffa500;
-	border: 1px solid #c9910a;
-	border-bottom: 3px solid #c9910a;
-	border-radius: 0.2em;
-	color: #896008;
-	margin-top: 0.5em;
-	padding: 0.5em 4em;
+#libro, #side {
+	display: inline-block;
+	height: 100%;
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: auto;
+	vertical-align: top;
 }
 
-#preguntas{
+#wrapper {
+	bottom: 0.5em;
+	left: 1em;
 	position: absolute;
-	right: 0;
-	text-align: right;
-	top: 0;
-	width: 45%;
+	right: 0.5em;
+	top: 5em;
 }
 
 .regresar{

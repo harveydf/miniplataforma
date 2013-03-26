@@ -4,4 +4,9 @@
 		<input type="text" placeholder="Escribe tu pregunta">
 		<button>Enviar Pregunta</button>
 	</div>
+	<ul>
+		{% for pregunta in preguntas %}
+		<li><a data-id="{{ pregunta.id }}">{{ pregunta.titulo }}</a></li>
+		{% endfor %}
+	</ul>
 </article>

@@ -1,8 +1,12 @@
 from django import template
 
+from discusion.models import Preguntas
+
 register = template.Library()
 
-@register.inclusion_tag('discusiones.html')
-def show_discusiones():
-	return
+@register.inclusion_tag('discusiones.html', takes_context=True)
+def show_discusiones(context):
+	preguntas = Preguntas.objects.all()
+
+	return {'preguntas': preguntas}
 

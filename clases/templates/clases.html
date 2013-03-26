@@ -8,6 +8,7 @@
 
 	<link rel="stylesheet" href="/static/css/normalize.css">
 	<link rel="stylesheet" href="/static/css/clases.css">
+	<link rel="stylesheet" href="/static/css/discusion.css">
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/static/js/prefixfree.min.js"></script>
@@ -19,25 +20,27 @@
 	<header>
 		<h1>Mini Plataforma</h1>
 	</header>
-	<section>
-		<article id="clases">
-			<ul>
-				{% for clase in clases %}
-				<li>
-					<a data-id="{{ clase.id }}">
-						<figure>
-							<img src="/static/img/{{ clase.thumb }}">
-							<figcaption>{{ clase.descripcion }}</figcaption>
-						</figure>
-					</a>
-				</li>
-				{% endfor %}
-			</ul>
-		</article>
-		<article id="contenido-clase"></article>
-	</section>
-	<section>
-		{% show_discusiones %}
+	<section id="wrapper">
+		<section id="libro">
+			<article id="clases">
+				<ul>
+					{% for clase in clases %}
+					<li>
+						<a data-id="{{ clase.id }}">
+							<figure>
+								<img src="/static/img/{{ clase.thumb }}">
+								<figcaption>{{ clase.descripcion }}</figcaption>
+							</figure>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</article>
+			<article id="contenido-clase"></article>
+		</section>
+		<section id="side">
+			{% show_discusiones %}
+		</section>
 	</section>
 </body>
 </html>
