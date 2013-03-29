@@ -87,6 +87,7 @@ ul{
 }
 
 #libro{
+	background: #fefefe;
 	box-shadow: 2px 2px 3px rgba(0,0,0,0.3);
 	width: 55%;
 }
@@ -116,6 +117,7 @@ ul{
 	display: block;
 	font-weight: bold;
 	padding: 12px 20px 11px;
+	position: relative;
 	text-align: right;
 	text-transform: uppercase;
 	width: 50%;
@@ -126,7 +128,7 @@ ul{
 	border-right: 24px solid #095e87;
 	border-top: 20px solid transparent;
 	content: "";
-	left: 0.5em;
+	left: -1.5em;
 	position: absolute;
-	top: 2em;
+	top: 0em;
 }
