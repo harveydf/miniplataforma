@@ -46,3 +46,4 @@ def guardar_respuesta(request):
 			respuesta.save()
 
 		return cargar_respuestas(request, request.POST['pregunta'])
+		
