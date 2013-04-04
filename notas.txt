@@ -1,0 +1,291 @@
+###################################
+#  Pasos para crear tu template   #
+#  #mejorandocurso @harveydf      #
+#  Iván Martínez  03/04/2013      #
+#  @imartinezbr  ivanmartinez.net #
+###################################
+
+1. Crear aplicaciones (modulos)
+// python manage.py startapp [nombre]
+
+2. Configurar nuesta app (settings.py)
+// agregar en INSTALLED_APPS = 'nombre',
+
+## runserver ##
+
+3.- Crear modulos de clases [empezando con semantica]
+// crear dir 'templates' /clases/templates/clases.html
+
+4.- Enlazar URL con una VISTA #urls.py
+// url(r'^$', 'clases.views.home', name='home'),
+
+5.- Definir funcion de home #views.py
+ def home(request):
+  clases = Clases.objects.all()
+	return render_to_response('clases.html', {'clases': clases}, context_instance=RequestContext(request))
+
+6. Crear en HTML la seccion donde van las CLASES de los modelos
+#clases.html
+<section id="wrapper">
+	<section id="libro">
+		<article id="clases"></article>
+		<article id="contenido-clase"></article>
+	</section>
+</section>
+
+7.- Crear modelo Clases #models.py
+class Clases(models.Model):
+	nombre = models.CharField(max_length=255)
+	descripcion = models.TextField()
+	url = models.CharField(max_length=100)
+	thumb = models.CharField(max_length=100)
+
+	def __unicode__(self):
+		return self.nombre
+
+8.- Crear tablas y sincronizar
+// python manage.py syncdb
+
+9.- Ingresar datos y habilitar Admin DJango
+// crear_clases.py 
+
+10.- Abrimos shell y pegamos data
+// python manage.py shell 
+// pegamos datos de crear_clases.py
+
+11.- Vemos objetos
+// from clases.models import Clases  # llamas la clase Clases de models.py dentro del dir 'clases'
+// Clases.objects.all()     # llamas a todos los objetos dentro de la clase 'Clases'
+
+12.- En views.py # notas en archivo
+// No solo muestres el html, tambien muestra todas las clases
+clases = Clases.objects.all()  #traeme todas las clases 
+	return render_to_response('clases.html', {'clases': clases}, context_instance=RequestContext(request)) #se pasan los objetos al template
+
+13.- Crear lista desordenada en clases.html donde parseas todas las clases y crear el % for %
+	<article id="clases">
+		<ul>
+			{% for clase in clases %}
+			<li>
+				<a data-id="{{ clase.id }}">
+					<figure>
+						<img src="/static/img/{{ clase.thumb }}">
+						<figcaption>{{ clase.descripcion }}</figcaption>
+					</figure>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</article>
+
+14.- Crear carpeta 'static' dentro de 'clases'
+
+15.- Incluir los scripts en el header del html
+// static/css/normalize.css ' clases.css //
+// jquery. prefixfree.min.js, main.js //
+## runserver ##
+
+
+16.- ERROR: Cuando das click intenta acceder al URL por ajax pero no se ha creado la vista ni la URL
+
+17.- incluir urls.py el ## runserver ##
+// url(r'^cargar-contenido-clase/(?P<id>\d+)$', 'clases.views.cargar_clase', name='cargar_clase'),
+                   #pasa el id y saber cual es la clase a la que queeremos acceder
+
+18.- Serializar datos y decirle a ajax que tipo de contenido se envia. 
+// views.py
+// from django.http import HttpResponse
+// import json
+return HttpResponse(
+			json.dumps({'nombre': clase.nombre, 'descripcion': clase.descripcion, 'url': clase.url }),
+			content_type="application/json; charset=uft8"
+			)
+	else:
+		raise Http404
+
+19. Restringir acceso a datos. Preguntando si es AjAx
+// if request.is_ajax(): else: raise Http404
+
+20. Habilitar Panel Admin
+##  settings.py 
+// 'django.contrib.admin', 
+
+## urls.py
+// from django.contrib import admin 
+// admin.autodiscover()
+// url(r'^admin/', include(admin.site.urls)),
+
+## python manage.py syncdb ##
+
+#################################################################
+##############         MODULO DE PREGUNTAS       ################
+#################################################################
+
+
+21.- Empezar con HTML.
+// Crear 'templates' en 'discusiones' = 'discusiones.html'
+// crear una seccion en el clases.html donde se importe discusiones.html 
+#discusiones.html
+<article id="preguntas">
+	<div id="crear-pregunta">
+		{% csrf_token %}
+		<input type="text" placeholder="Escribe tu pregunta">
+		<button>Enviar Pregunta</button>
+	</div>
+	<ul>
+		{% for pregunta in preguntas %}
+		<li><a data-id="{{ pregunta.id }}">{{ pregunta.titulo }}</a></li>
+		{% endfor %}
+	</ul>
+</article>
+<article id="respuestas"></article>
+
+22. Crear classes en models.py
+// Poner llaves foraneas a preguntas. ¿Que respuesta corresponde a que pregunta? Para poder filtrar nuestras respuestas por el ID de la pregunta  models.ForeignKey(Preguntas)
+
+class Preguntas(models.Model):
+	titulo = models.CharField(max_length=255)
+
+	def __unicode__(self):
+		return self.titulo
+
+class Respuestas(models.Model):
+	titulo = models.CharField(max_length=255)
+	pregunta = models.ForeignKey(Preguntas)
+
+	def __unicode__(self):
+		return self.titulo
+
+23. Crear tablas ## syncdb
+// crea tabla de pregunta
+// crea tabla de respuestas
+
+#base lista
+
+
+24.-  Crear dentro del modelo que vamos a importar 'templatetags'
+# crear un archivo __init__.py  [[vacio]] 
+# permite saber a python que la carpeta se puede importar
+
+25.- Crear discusiones_tags.py
+
+26.- Registrar tags/bloques en DJango
+// Instanciar libreria
+// DOS FORMAS de registrar
+// def show_discusiones(): va a parsear todas las discusiones al html discusiones.html
+// Los TAGS no tienen que ver con nuestros modelos
+	from django import template
+
+	from discusion.models import Preguntas
+
+	register = template.Library()
+
+	@register.inclusion_tag('discusiones.html', takes_context=True)
+
+	def show_discusiones(context):
+		preguntas = Preguntas.objects.all().order_by('-id')
+
+		return {'preguntas': preguntas}
+
+register.inclusion_tag('discusiones.html')(show_discusiones)
+
+27.- Incluir en 'clases.html'
+	<section id="side">
+			{% show_discusiones %}
+	</section>
+
+28.- Cargar todos los tags
+
+## clases.html en <head>
+// {% load discusiones_tags %} 
+
+29.- Muestra nuestro tag
+// {% show_discusiones %} 
+// Tienes el Input y el Boton 
+
+30.- Cargar el CSS y JS de 'discusiones' de '/static/' 
+// NOTA: Son archivos independientes para cada app 
+
+Crear URL de guardar preguntas y funcion de guardar preguntas
+
+31.- Crear URL de guardar preguntas
+// url(r'^guardar-pregunta/$', 'discusion.views.guardar_pregunta', name='guardar_pregunta'),
+// guardar pregunta por POST no necesitas capturar ningún dato. 
+// redirecciona a discusion.views.[funcion 'guardar_pregunta']
+
+32.- Crear funcion de guardar_pregunta 
+# views.py  de 'discusion'
+
+def guardar_pregunta(request):
+	if request.is_ajax(): #checo si es ajax
+
+		if request.POST['pregunta']: #valido si es una pregunta y no venga vacio 
+			pregunta = Preguntas(titulo=request.POST['pregunta']) # instanciar pregunta
+			pregunta.save() #guarda pregunta en base de datos
+
+		preguntas = Preguntas.objects.all().order_by('-id') #traeme todas las preguntas en orden dsc
+		#regresar data en forma de lista
+		data = list() #guarda los datos de las preguntas y enviarlas al AJAX
+		for pregunta in preguntas: # por cada pregunta 
+			data.append({ 'id': pregunta.pk, 'titulo': pregunta.titulo }) #coloca el ID dentro de pregunta.id y el pregunta.titulo
+
+		return HttpResponse( #importar HttpResponse
+			json.dumps({ 'preguntas': data }), #serializar los datos a JSON
+			content_type="application/json; charset=uft8" #indica el tipo de contenido es el que se envia
+			)
+	else:
+		raise Http404 # si no es ajax, levanta un 'Not Found'
+
+33.-  Agregar el Contexto en home
+// Bloque justo antes del INPUT pero no aparece
+
+34.- Mostrar preguntas que se crean en 'discusiones.html' 
+	<ul>	
+		{% for pregunta in preguntas %}
+		<li><a data-id="{{ pregunta.id }}">{{ pregunta.titulo }}</a></li>
+		{% endfor %}
+	</ul>
+
+35.- Mostrar Respuestas asociadas a la Pregunta
+// id="respuestas", agreegar url
+	url(r'^cargar-respuestas/(?P<id>\d+)$', 'discusion.views.cargar_respuestas', name='cargar_respuestas'),
+
+    url(r'^guardar-respuesta/$', 'discusion.views.guardar_respuesta', name='guardar_respuesta'),
+
+
+36.- Views.py de 'discusiones' cargar_respuestas
+	def cargar_respuestas(request, id):
+	if request.is_ajax():
+		respuestas = Respuestas.objects.filter(pregunta__id=id).order_by('-id')
+
+		data = list()
+		for respuesta in respuestas:
+			data.append(respuesta.titulo)
+
+		return HttpResponse(
+			json.dumps({'respuestas': data, 'pregunta': id}),
+			content_type="application/json; charset=uft8"
+			)
+	else:
+		raise Http404
+
+37.- Crear URL de 'guardar_respuesta' en urls.py
+    url(r'^guardar-respuesta/$', 'discusion.views.guardar_respuesta', name='guardar_respuesta'),
+
+
+38.- Crear funcion guardar_respuesta
+def guardar_respuesta(request):
+	if request.is_ajax():
+
+		if request.POST['respuesta']:
+			respuesta = Respuestas(titulo=request.POST['respuesta'], pregunta_id=request.POST['pregunta'])
+			respuesta.save()
+
+		return cargar_respuestas(request, request.POST['pregunta']) 
+
+
+# Notas Extras #
+# Cuando vas a filtrar datos es con __  (2)
+# Para instanciar es con  _ (1)
+
+
